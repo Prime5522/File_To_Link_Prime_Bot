@@ -38,7 +38,6 @@ files = glob.glob(ppath)
 TechVJBot.start()
 loop = asyncio.get_event_loop()
 
-
 async def start():
     print('\n')
     print('Initalizing Your Bot')
@@ -73,10 +72,8 @@ async def start():
     await web.TCPSite(app, bind_address, PORT).start()
     await idle()
 
-
 if __name__ == '__main__':
     try:
         loop.run_until_complete(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
-

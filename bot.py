@@ -7,13 +7,15 @@
 import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
 
-# Set up logging configurations
+# Get logging configurations
+logging.config.fileConfig('logging.conf')
+logging.getLogger().setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("imdbpy").setLevel(logging.ERROR)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("imdbpy").setLevel(logging.ERROR)
 logging.getLogger("aiohttp").setLevel(logging.ERROR)
 logging.getLogger("aiohttp.web").setLevel(logging.ERROR)
 
@@ -36,9 +38,10 @@ files = glob.glob(ppath)
 TechVJBot.start()
 loop = asyncio.get_event_loop()
 
+
 async def start():
     print('\n')
-    print('Initializing Your Bot')
+    print('Initalizing Your Bot')
     bot_info = await TechVJBot.get_me()
     await initialize_clients()
     for name in files:
@@ -70,8 +73,10 @@ async def start():
     await web.TCPSite(app, bind_address, PORT).start()
     await idle()
 
+
 if __name__ == '__main__':
     try:
         loop.run_until_complete(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
+

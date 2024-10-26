@@ -31,6 +31,6 @@ DATABASE_URI = environ.get('DATABASE_URI', "")
 DATABASE_NAME = environ.get('DATABASE_NAME', "techvjautobot")
 
 # Shortlink Info
-SHORTLINK = bool(environ.get('SHORTLINK', False)) # Set True Or False
+SHORTLINK = bool(environ.get('SHORTLINK', True)) # Set True Or False
 SHORTLINK_URL = environ.get('SHORTLINK_URL', '')
 SHORTLINK_API = environ.get('SHORTLINK_API', '')

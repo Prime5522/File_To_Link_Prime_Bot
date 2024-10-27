@@ -31,7 +31,12 @@ async def start(client, message):
             if btn:
                 username = (await client.get_me()).username
                 btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1] if len(message.command) > 1 else 'true'}")])
-                await message.reply_text(text=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on the try again button. 😇</b>", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_photo(
+                    chat_id=message.from_user.id,
+                    photo="https://envs.sh/AHX.jpg",  # এখানে নতুন ছবির লিঙ্ক দিন
+                    caption=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on the try again button. 😇</b>",
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
                 return
         except Exception as e:
             print(e)
@@ -41,11 +46,11 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
     rm = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("❤️‍🔥 𝗨𝗣𝗗𝗔𝗧𝗘 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 ", url="https://t.me/Prime_botz")]]
+        [[InlineKeyboardButton("❤️‍🔥 𝗨𝗣𝗗𝗔𝗧𝗘 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 🔥", url="https://t.me/Prime_botz")]]
     )
     await client.send_photo(
         chat_id=message.from_user.id,
-        photo="https://envs.sh/AHX.jpg",  # এখানে আপনার ইমেজের লিঙ্ক দিন
+        photo="https://envs.sh/AH-.jpg",  # এখানে আপনার আগের ইমেজের লিঙ্ক দিন
         caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
         reply_markup=rm,
         parse_mode=enums.ParseMode.HTML

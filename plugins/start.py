@@ -1,9 +1,10 @@
 import random
 import humanize
+import asyncio
 from Script import script
 from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK
+from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK, START_IMG
 from urllib.parse import quote_plus
 from pyrogram.errors import UserNotParticipant
 from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size
@@ -45,20 +46,26 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
-    rm = InlineKeyboardMarkup(
-    [
+    # নতুন অংশ যুক্ত করা হয়েছে এখানে
+    buttons = [
         [
             InlineKeyboardButton("✨ 𝗠𝗼𝘃𝗶𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⚡", url="https://t.me/Prime_Movies4U"),
             InlineKeyboardButton("💫 𝗔𝗱𝗺𝗶𝗻 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 💫", url="https://t.me/Prime_Bots_Support_RoBot")
         ],
         [InlineKeyboardButton("❤️‍🔥 𝗨𝗽𝗱𝗮𝘁𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🔥", url="https://t.me/Prime_botz")]
     ]
-                )
+    
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
+    m = await message.reply_sticker("CAACAgUAAxkBAAJ_9GcBHjuwkFd321YlOG4WOtdDCLv7AAIhFAACTiwJVPNa_9D21RH6NgQ")
+    await asyncio.sleep(3)
+    await m.delete()
+    
     await client.send_photo(
         chat_id=message.from_user.id,
         photo="https://envs.sh/AH-.jpg",  # এখানে আপনার আগের ইমেজের লিঙ্ক দিন
         caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-        reply_markup=rm,
+        reply_markup=reply_markup,
         parse_mode=enums.ParseMode.HTML
     )
 

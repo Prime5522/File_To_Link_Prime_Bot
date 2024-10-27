@@ -4,7 +4,7 @@ import asyncio
 from Script import script
 from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK, 
+from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK
 from urllib.parse import quote_plus
 from pyrogram.errors import UserNotParticipant
 from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size

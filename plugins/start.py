@@ -46,8 +46,14 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
     rm = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("❤️‍🔥 𝗨𝗣𝗗𝗔𝗧𝗘 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 🔥", url="https://t.me/Prime_botz")]]
-    )
+    [
+        [
+            InlineKeyboardButton("✨ 𝗠𝗼𝘃𝗶𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⚡", url="https://t.me/Prime_Movies4U"),
+            InlineKeyboardButton("💫 𝗔𝗱𝗺𝗶𝗻 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 💫", url="https://t.me/Prime_Bots_Support_RoBot")
+        ],
+        [InlineKeyboardButton("❤️‍🔥 𝗨𝗽𝗱𝗮𝘁𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🔥", url="https://t.me/Prime_botz")]
+    ]
+                )
     await client.send_photo(
         chat_id=message.from_user.id,
         photo="https://envs.sh/AH-.jpg",  # এখানে আপনার আগের ইমেজের লিঙ্ক দিন

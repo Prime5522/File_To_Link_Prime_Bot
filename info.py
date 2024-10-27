@@ -3,6 +3,9 @@ from os import environ
 
 id_pattern = re.compile(r'^.\d+$')
 
+AUTH_CHANNEL = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '-1002245813234').split()] # give channel id with seperate space. Ex : ('-10073828 -102782829 -1007282828')
+
+
 # Bot information
 SESSION = environ.get('SESSION', 'TechVJBot')
 API_ID = int(environ.get('API_ID', ''))

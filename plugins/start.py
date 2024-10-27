@@ -1,12 +1,16 @@
+import random
+import humanize
 import asyncio
+from Script import script
 from pyrogram import Client, filters, enums
-from pyrogram.errors import UserNotParticipant
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK
 from urllib.parse import quote_plus
-from helper_funcs import db, humanize
-from config import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK
-from utils import get_name, get_hash, get_media_file_size, get_shortlink
-import script
+from pyrogram.errors import UserNotParticipant
+from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size
+from TechVJ.util.human_readable import humanbytes
+from database.users_chats_db import db
+from utils import temp, get_shortlink
 
 async def is_subscribed(bot, query, channel):
     btn = []
@@ -15,17 +19,34 @@ async def is_subscribed(bot, query, channel):
         try:
             await bot.get_chat_member(id, query.from_user.id)
         except UserNotParticipant:
-            btn.append([InlineKeyboardButton("✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇", url=chat.invite_link)])
+            btn.append([InlineKeyboardButton("✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇", url=chat.invite_link)])  # পরিবর্তন করা হয়েছে
         except Exception:
             pass
     return btn
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
+    if AUTH_CHANNEL:
+        try:
+            btn = await is_subscribed(client, message, AUTH_CHANNEL)
+            if btn:
+                username = (await client.get_me()).username
+                btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1] if len(message.command) > 1 else 'true'}")])
+                await client.send_photo(
+                    chat_id=message.from_user.id,
+                    photo="https://envs.sh/AHX.jpg",  # এখানে নতুন ছবির লিঙ্ক দিন
+                    caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
+                return
+        except Exception as e:
+            print(e)
+    
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
+    # নতুন অংশ যুক্ত করা হয়েছে এখানে
     buttons = [
         [
             InlineKeyboardButton("✨ 𝗠𝗼𝘃𝗶𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⚡", url="https://t.me/Prime_Movies4U"),
@@ -50,18 +71,6 @@ async def start(client, message):
 
 @Client.on_message(filters.private & (filters.document | filters.video))
 async def stream_start(client, message):
-    btn = await is_subscribed(client, message, AUTH_CHANNEL)
-    if btn:
-        username = (await client.get_me()).username
-        btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1] if len(message.command) > 1 else 'true'}")])
-        await client.send_photo(
-            chat_id=message.from_user.id,
-            photo="https://envs.sh/AHX.jpg",
-            caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
-        return
-
     file = getattr(message, message.media.value)
     filename = file.file_name
     filesize = humanize.naturalsize(file.file_size) 

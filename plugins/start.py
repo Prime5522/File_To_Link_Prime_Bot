@@ -19,7 +19,7 @@ async def is_subscribed(bot, query, channel):
         try:
             await bot.get_chat_member(id, query.from_user.id)
         except UserNotParticipant:
-            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)])
+            btn.append([InlineKeyboardButton("✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇", url=chat.invite_link)])  # পরিবর্তন করা হয়েছে
         except Exception:
             pass
     return btn
@@ -35,7 +35,7 @@ async def start(client, message):
                 await client.send_photo(
                     chat_id=message.from_user.id,
                     photo="https://envs.sh/AHX.jpg",  # এখানে নতুন ছবির লিঙ্ক দিন
-                    caption=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on the try again button. 😇</b>",
+                    caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
@@ -109,4 +109,4 @@ async def stream_start(client, message):
     
     msg_text = """<i><u>𝗬𝗼𝘂𝗿 𝗟𝗶𝗻𝗸 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 !</u></i>\n\n<b>📂 Fɪʟᴇ ɴᴀᴍᴇ :</b> <i>{}</i>\n\n<b>📦 Fɪʟᴇ ꜱɪᴢᴇ :</b> <i>{}</i>\n\n<b>📥 Dᴏᴡɴʟᴏᴀᴅ :</b> <i>{}</i>\n\n<b> 🖥ᴡᴀᴛᴄʜ  :</b> <i>{}</i>\n\n<b>🚸 Nᴏᴛᴇ : ʟɪɴᴋ ᴡᴏɴ'ᴛ ᴇxᴘɪʀᴇ ᴛɪʟʟ ɪ ᴅᴇʟᴇᴛᴇ.\n\n ♨️ 𝗗𝗼𝗻'𝘁 𝗙𝗼𝗿𝗴𝗲𝘁 𝗧𝗼 𝗝𝗼𝗶𝗻: <a href=https://t.me/Prime_Botz>𝐏𝐑𝐈𝐌𝐄 𝐁𝐎𝐓z 🔥</a></b>"""
 
-    await message.reply_text(text=msg_text.format(get_name(log_msg), humanbytes(get_media_file_size(message)), download, stream), quote=True, disable_web_page_preview=True, reply_markup=rm)
+    await message.reply_text(text=msg_text.format(get_name(log_msg), humanbytes(get_media_file_size(message)), download, stream), quote=True, disable_web_page_preview=True, reply_markup=

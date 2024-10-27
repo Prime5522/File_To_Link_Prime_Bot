@@ -5,6 +5,7 @@ from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
 from info import AUTH_CHANNEL, URL, LOG_CHANNEL, SHORTLINK
 from urllib.parse import quote_plus
+from pyrogram.errors import *
 from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size
 from TechVJ.util.human_readable import humanbytes
 from database.users_chats_db import db

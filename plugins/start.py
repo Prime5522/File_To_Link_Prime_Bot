@@ -12,47 +12,30 @@ from TechVJ.util.human_readable import humanbytes
 from database.users_chats_db import db
 from utils import temp, get_shortlink
 
-async def is_subscribed(bot, query, channel):
+async def is_subscribed(bot, user_id, channels):
     btn = []
-    for id in channel:
+    for id in channels:
         chat = await bot.get_chat(int(id))
         try:
-            await bot.get_chat_member(id, query.from_user.id)
+            await bot.get_chat_member(id, user_id)
         except UserNotParticipant:
-            btn.append([InlineKeyboardButton("✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇", url=chat.invite_link)])  # পরিবর্তন করা হয়েছে
+            btn.append([InlineKeyboardButton("✇ Join Our Updates Channel ✇", url=chat.invite_link)])
         except Exception:
             pass
     return btn
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
-    if AUTH_CHANNEL:
-        try:
-            btn = await is_subscribed(client, message, AUTH_CHANNEL)
-            if btn:
-                username = (await client.get_me()).username
-                btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1] if len(message.command) > 1 else 'true'}")])
-                await client.send_photo(
-                    chat_id=message.from_user.id,
-                    photo="https://envs.sh/AHX.jpg",  # এখানে নতুন ছবির লিঙ্ক দিন
-                    caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
-                    reply_markup=InlineKeyboardMarkup(btn)
-                )
-                return
-        except Exception as e:
-            print(e)
-    
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
-    # নতুন অংশ যুক্ত করা হয়েছে এখানে
     buttons = [
         [
-            InlineKeyboardButton("✨ 𝗠𝗼𝘃𝗶𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⚡", url="https://t.me/Prime_Movies4U"),
-            InlineKeyboardButton("💫 𝗔𝗱𝗺𝗶𝗻 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 💫", url="https://t.me/Prime_Bots_Support_RoBot")
+            InlineKeyboardButton("✨ Movie Channel ⚡", url="https://t.me/Prime_Movies4U"),
+            InlineKeyboardButton("💫 Admin Support 💫", url="https://t.me/Prime_Bots_Support_RoBot")
         ],
-        [InlineKeyboardButton("❤️‍🔥 𝗨𝗽𝗱𝗮𝘁𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🔥", url="https://t.me/Prime_botz")]
+        [InlineKeyboardButton("❤️‍🔥 Update Channel 🔥", url="https://t.me/Prime_botz")]
     ]
     
     reply_markup = InlineKeyboardMarkup(buttons)
@@ -63,7 +46,7 @@ async def start(client, message):
     
     await client.send_photo(
         chat_id=message.from_user.id,
-        photo="https://envs.sh/AH-.jpg",  # এখানে আপনার আগের ইমেজের লিঙ্ক দিন
+        photo="https://envs.sh/AH-.jpg",
         caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
         reply_markup=reply_markup,
         parse_mode=enums.ParseMode.HTML
@@ -71,6 +54,19 @@ async def start(client, message):
 
 @Client.on_message(filters.private & (filters.document | filters.video))
 async def stream_start(client, message):
+    if AUTH_CHANNEL:
+        btn = await is_subscribed(client, message.from_user.id, AUTH_CHANNEL)
+        if btn:
+            username = (await client.get_me()).username
+            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
+            await client.send_photo(
+                chat_id=message.from_user.id,
+                photo="https://envs.sh/AHX.jpg",
+                caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
+            return
+
     file = getattr(message, message.media.value)
     filename = file.file_name
     filesize = humanize.naturalsize(file.file_size) 

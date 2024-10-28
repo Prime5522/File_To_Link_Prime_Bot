@@ -57,12 +57,15 @@ async def stream_start(client, message):
     if AUTH_CHANNEL:
         btn = await is_subscribed(client, message.from_user.id, AUTH_CHANNEL)
         if btn:
-            username = (await client.get_me()).username
-            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
             await client.send_photo(
                 chat_id=message.from_user.id,
                 photo="https://envs.sh/AHX.jpg",
-                caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
+                caption=(
+                    "<b>Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ ᴍᴇ ғɪʀꜱᴛ ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ Jᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ.\n\n"
+                    "ғɪʀꜱᴛ, ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ '✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇' ʙᴜᴛᴛᴏɴ, ᴛʜᴇɴ, "
+                    "ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ 'ʀᴇᴏᴜᴇꜱᴛ ᴛᴏ Jᴏɪɴ' ʙᴜᴛᴛᴏɴ.\n\n"
+                    "ᴀғᴛᴇʀ ᴛʜᴀᴛ ᴄᴏᴍᴇ ʜᴇʀᴇ ᴀɢᴀɪɴ ᴀɴᴅ ꜱᴇɴᴅ ʏᴏᴜʀ ғɪʟᴇ.</b>"
+                ),
                 reply_markup=InlineKeyboardMarkup(btn)
             )
             return

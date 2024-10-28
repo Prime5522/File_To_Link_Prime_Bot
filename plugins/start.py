@@ -46,7 +46,7 @@ async def start(client, message):
     
     await client.send_photo(
         chat_id=message.from_user.id,
-        photo="https://envs.sh/AH-.jpg",
+        photo="https://envs.sh/Amh.jpg",
         caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
         reply_markup=reply_markup,
         parse_mode=enums.ParseMode.HTML
@@ -100,8 +100,8 @@ async def stream_start(client, message):
     rm = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("sᴛʀᴇᴀᴍ 🖥", url=stream),
-                InlineKeyboardButton("ᴅᴏᴡɴʟᴏᴀᴅ 📥", url=download)
+                InlineKeyboardButton("🖥 sᴛʀᴇᴀᴍ 🖥", url=stream),
+                InlineKeyboardButton("📥 ᴅᴏᴡɴʟᴏᴀᴅ 📥", url=download)
             ]
         ] 
     )

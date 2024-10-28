@@ -57,19 +57,16 @@ async def stream_start(client, message):
     if AUTH_CHANNEL:
         btn = await is_subscribed(client, message.from_user.id, AUTH_CHANNEL)
         if btn:
-            # "Try Again" বাটনে ক্লিক করলে আগের ফাইল প্রক্রিয়াটি পুনরায় শুরু হবে
-            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", callback_data=f"retry_{message.message_id}")])
+            username = (await client.get_me()).username
+            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
             await client.send_photo(
                 chat_id=message.from_user.id,
                 photo="https://envs.sh/AHX.jpg",
-                caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Try Again\" button.</b>",
+                caption=f"<b>👋 Hello {message.from_user.mention},\n\nIf you want to use me first you need to join our update channel.\n\nFirst, click on the \"✇ Join Our Updates Channel ✇\" button, then click on the \"Request to Join\" button.\n\nAfter that, click on the \"Try Again\" button.</b>",
                 reply_markup=InlineKeyboardMarkup(btn)
             )
             return
-    
-    await process_file(client, message)
 
-async def process_file(client, message):
     file = getattr(message, message.media.value)
     filename = file.file_name
     filesize = humanize.naturalsize(file.file_size) 
@@ -91,7 +88,7 @@ async def process_file(client, message):
         download = await get_shortlink(f"{URL}{str(log_msg.id)}/{fileName}?hash={get_hash(log_msg)}")
         
     await log_msg.reply_text(
-        text=f"•• ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ɪᴅ #{user_id} \n•• ᴜꜱᴇʀɴᴀᴍᴇ : {username} \n\n•• ᖴᎥᒪᗴ Nᗩᗰᴇ : {fileName}",
+        text=f"•• ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ɪᴅ #{user_id} \n•• ᴜꜱᴇʀɴᴀᴍᴇ : {username} \n\n•• ᖴᎥᒪᗴ Nᗩᗰᗴ : {fileName}",
         quote=True,
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🚀 Fast Download 🚀", url=download), InlineKeyboardButton('🖥️ Watch online 🖥️', url=stream)]])
@@ -109,9 +106,3 @@ async def process_file(client, message):
     msg_text = """<i><u>𝗬𝗼𝘂𝗿 𝗟𝗶𝗻𝗸 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 !</u></i>\n\n<b>📂 Fɪʟᴇ ɴᴀᴍᴇ :</b> <i>{}</i>\n\n<b>📦 Fɪʟᴇ ꜱɪᴢᴇ :</b> <i>{}</i>\n\n<b>📥 Dᴏᴡɴʟᴏᴀᴅ :</b> <i>{}</i>\n\n<b> 🖥ᴡᴀᴛᴄʜ  :</b> <i>{}</i>\n\n<b>🚸 Nᴏᴛᴇ : ʟɪɴᴋ ᴡᴏɴ'ᴛ ᴇxᴘɪʀᴇ ᴛɪʟʟ ɪ ᴅᴇʟᴇᴛᴇ.\n\n ♨️ 𝗗𝗼𝗻'𝘁 𝗙𝗼𝗿𝗴𝗲𝘁 𝗧𝗼 𝗝𝗼𝗶𝗻: <a href=https://t.me/Prime_Botz>𝐏𝐑𝐈𝐌𝐄 𝐁𝐎𝐓z 🔥</a></b>"""
 
     await message.reply_text(text=msg_text.format(get_name(log_msg), humanbytes(get_media_file_size(message)), download, stream), quote=True, disable_web_page_preview=True, reply_markup=rm)
-
-@Client.on_callback_query(filters.regex(r"retry_(\d+)"))
-async def retry_process(client, callback_query):
-    message_id = int(callback_query.data.split("_")[1])
-    message = await client.get_messages(callback_query.message.chat.id, message_id)
-    await process_file(client, message)

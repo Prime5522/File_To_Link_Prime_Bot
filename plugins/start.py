@@ -19,7 +19,7 @@ async def is_subscribed(bot, user_id, channels):
         try:
             await bot.get_chat_member(id, user_id)
         except UserNotParticipant:
-            btn.append([InlineKeyboardButton("✇ Join Our Updates Channel ✇", url=chat.invite_link)])
+            btn.append([InlineKeyboardButton("✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇", url=chat.invite_link)])
         except Exception:
             pass
     return btn
@@ -59,7 +59,7 @@ async def stream_start(client, message):
         if btn:
             await client.send_photo(
                 chat_id=message.from_user.id,
-                photo="https://envs.sh/AHX.jpg",
+                photo="https://envs.sh/AfJ.jpg",
                 caption=(
                     "<b>Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ ᴍᴇ ғɪʀꜱᴛ ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ Jᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ.\n\n"
                     "ғɪʀꜱᴛ, ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ '✇ Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ✇' ʙᴜᴛᴛᴏɴ, ᴛʜᴇɴ, "

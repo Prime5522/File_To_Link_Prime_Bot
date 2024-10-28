@@ -58,7 +58,9 @@ async def stream_start(client, message):
         btn = await is_subscribed(client, message.from_user.id, AUTH_CHANNEL)
         if btn:
             username = (await client.get_me()).username
-            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
+            # "Try Again" বাটনে ক্লিক করলে আগের ফাইল প্রক্রিয়াটি পুনরায় শুরু হবে
+            btn.append([InlineKeyboardButton("♻️ Try Again ♻️", callback_data=f"retry_{message.message_id}")])
+            
             await client.send_photo(
                 chat_id=message.from_user.id,
                 photo="https://envs.sh/AHX.jpg",
@@ -66,6 +68,12 @@ async def stream_start(client, message):
                 reply_markup=InlineKeyboardMarkup(btn)
             )
             return
+
+@Client.on_callback_query(filters.regex(r"retry_(\d+)"))
+async def retry_process(client, callback_query):
+    message_id = int(callback_query.data.split("_")[1])
+    # আগের ফাইল প্রক্রিয়াটি পুনরায় শুরু করার জন্য নিচের লাইন যুক্ত করা হলো
+    await stream_start(client, await client.get_messages(callback_query.message.chat.id, message_id))
 
     file = getattr(message, message.media.value)
     filename = file.file_name

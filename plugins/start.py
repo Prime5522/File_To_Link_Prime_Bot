@@ -26,6 +26,7 @@ async def is_subscribed(bot, user_id, channels):
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
+    await message.react(emoji="🔥", big=True)
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))

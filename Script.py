@@ -8,7 +8,7 @@ class script(object):
     
 ✏️ I Am A Advance File Stream Bot With Multiple Player Support And Url Shortner.I'ᴍ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs sᴛʀᴇᴀᴍɪɴɢ ʙᴏᴛ ᴀs ᴡᴇʟʟ ᴅɪʀᴇᴄᴛ ʟɪɴᴋs ɢᴇɴᴇʀᴀᴛᴏʀ. Best Ui Performance.
 
-Now Send Me A Media To See Magic ✨</b>\n\n🌿 ᴍᴀɪɴᴛᴀɪɴᴇᴅ ʙʏ : <a href=https://t.me/Prime_Botz>𝐏𝐑𝐈𝐌𝐄 𝐁𝐎𝐓𝐳 🔥</a>\n\n‣ My ᴅᴇᴠᴇʟᴏᴘᴇʀ/Owner ❤️‍🔥➠ <a href=https://t.me/Prime_Nayem>𝗠𝗥.𝗣𝗥𝗜𝗠𝗘 😇</a>"""
+Now Send Me A Media To See Magic ✨</b>\n\n<blockquote> 🌿 ᴍᴀɪɴᴛᴀɪɴᴇᴅ ʙʏ  <a href='https://t.me/Prime_Botz'>ᴘʀɪᴍᴇ ʙᴏᴛz 🔥</a></blockquote>"""
 
     LOG_TEXT_P = """#NewUser
 ID - <code>{}</code>

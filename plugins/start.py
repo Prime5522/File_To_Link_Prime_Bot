@@ -32,11 +32,12 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
     buttons = [
-        [
-            InlineKeyboardButton("✨ Movie Channel ⚡", url="https://t.me/Prime_Movies4U"),
-            InlineKeyboardButton("💫 Admin Support 💫", url="https://t.me/Prime_Bots_Support_RoBot")
-        ],
-        [InlineKeyboardButton("❤️‍🔥 Update Channel 🔥", url="https://t.me/Prime_botz")]
+    [
+        InlineKeyboardButton("✨ ᴍᴏᴠɪᴇꜱ ᴄʜᴀɴɴᴇʟ ⚡", url="https://t.me/Prime_Movies4U"),
+        InlineKeyboardButton("💬 ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ 💬", url="https://t.me/Prime_botz_Support")
+    ],
+    [InlineKeyboardButton("📢 ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📢", url="https://t.me/Prime_botz")],
+    [InlineKeyboardButton("☆ 💫 𝗖𝗥𝗘𝗔𝗧𝗢𝗥 💫 ☆", url="https://t.me/Prime_Nayem")]
     ]
     
     reply_markup = InlineKeyboardMarkup(buttons)
